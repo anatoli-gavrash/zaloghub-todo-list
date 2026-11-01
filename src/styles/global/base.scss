@@ -1,0 +1,167 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  &:focus,
+  &:focus-visible {
+    outline-color: rgba(var(--color-dark));
+  }
+}
+
+*,
+*:before,
+*:after {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scrollbar-gutter: stable;
+  scroll-behavior: smooth;
+  font-size: 10px;
+  background-color: rgba(var(--color-gray));
+  
+  @include breakpoint($bp-lg) {
+    font-size: calc(100vw / 1440 * 10);
+  }
+
+  @include breakpoint($bp-md) {
+    font-size: calc(100vw / 1024 * 10);
+  }
+
+  @include breakpoint($bp-sm) {
+    font-size: calc(100vw / 375 * 10);
+  }
+}
+
+body {
+  overflow-x: hidden;
+  overflow-x: clip;
+  overflow-y: auto;
+  font-family: var(--font-main);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: var(--lh-main);
+  color: rgba(var(--color-dark));
+  background-color: rgba(var(--color-gray));
+
+  @include breakpoint($bp-sm) {
+    font-size: 1.4rem;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s;
+  cursor: pointer;
+
+  @include noTouch() {
+    &:hover {
+      color: rgba(var(--color-brown));
+    }
+  }
+}
+
+button {
+  border: none;
+  font-family: var(--font-main);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: var(--lh-main);
+  color: rgba(var(--color-dark));
+  background-color: unset;
+  cursor: pointer;
+}
+
+picture {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+img {
+  vertical-align: middle;
+  user-select: none;
+  pointer-events: none;
+}
+
+svg {
+  flex-shrink: 0;
+  width: 2.4rem;
+  height: 2.4rem;
+  vertical-align: middle;
+  color: inherit;
+  pointer-events: none;
+  user-select: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+fieldset {
+  border: none;
+  padding: initial;
+  margin: initial;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  transition: background-color 600s 0s;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 62dvh;
+
+  &--clip {
+    overflow: hidden;
+    overflow: clip;
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+
+  @include breakpoint($bp-sm) {
+    row-gap: 3.2rem;
+  }
+}
+
+.width {
+  width: 100%;
+  max-width: var(--block-width);
+}
+
+.width-full {
+  width: 100%;
+  max-width: var(--block-width-full);
+}
+
+.margin {
+  margin-left: var(--indent);
+}
+
+.padding {
+  box-sizing: content-box;
+  padding: 0 var(--indent);
+}
+
+.hide {
+  overflow: hidden;
+  position: absolute;
+  width: 0.1rem;
+  height: 0.1rem;
+  margin: -0.1rem;
+  clip: rect(0 0 0 0);
+}

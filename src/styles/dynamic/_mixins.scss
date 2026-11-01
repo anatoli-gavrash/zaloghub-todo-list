@@ -1,0 +1,26 @@
+@use "sass:color";
+@use "sass:list";
+
+@mixin breakpoint($bp, $isMin: false) {
+  @if $isMin {
+    @media (min-width: ($bp + 1px)) {
+      @content;
+    }
+  } @else {
+    @media (max-width: $bp) {
+      @content;
+    }
+  }
+}
+
+@mixin touch() {
+  @media (hover: none) {
+    @content;
+  }
+}
+
+@mixin noTouch() {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}

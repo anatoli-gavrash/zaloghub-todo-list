@@ -1,0 +1,47 @@
+@use "@styles/dynamic" as *;
+
+:root {
+  --bp-sm: #{$bp-sm};
+  --bp-md: #{$bp-md};
+  --bp-lg: #{$bp-lg};
+  --bp-xl: #{$bp-xl};
+  --bp-xxl: #{$bp-xxl};
+
+  --indent-lg: 4rem;
+  --indent-md: 2.4rem;
+  --indent-sm: 1.6rem;
+  --indent: var(--indent-lg);
+
+  --block-width-lg: 136rem;
+  --block-width-md: 94.4rem;
+  --block-width-sm: 34.3rem;
+  --block-width: var(--block-width-lg);
+  --block-width-full: calc(var(--block-width) + var(--indent) * 2);
+
+  --font-main: "Inter";
+  --lh-main: 1.2;
+
+  --color-black: 0, 0, 0;
+  --color-white: 255, 255, 255;
+  --color-dark: 55, 55, 55;
+  --color-gray: 236, 235, 233;
+  --color-brown: 125, 73, 73;
+
+  --radius-4: 0.4rem;
+
+  --blur-10: blur(10px);
+
+  --b-shadow: 0 0 0.2rem 0 rgba(var(--color-dark), 0.6);
+  --b-shadow-soft: 0 0.1rem 0.4rem 0 rgba(var(--color-dark), 0.15);
+  --b-shadow-back: 0 0 0.2rem 0 rgba(var(--color-dark), 0.25);
+
+  @include breakpoint($bp-md) {
+    --block-width: var(--block-width-md);
+    --indent: var(--indent-md);
+  }
+
+  @include breakpoint($bp-sm) {
+    --block-width: var(--block-width-sm);
+    --indent: var(--indent-sm);
+  }
+}
