@@ -3,4 +3,5 @@ import { lazy } from 'react';
 export const ICON = {
   check: lazy(() => import('@images/svg/icon__check.svg?react')),
   trash: lazy(() => import('@images/svg/icon__trash.svg?react')),
+  plus: lazy(() => import('@images/svg/icon__plus.svg?react')),
 };

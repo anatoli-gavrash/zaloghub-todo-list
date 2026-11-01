@@ -1,0 +1,54 @@
+.todoField {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.4rem;
+  
+  &Body {
+    display: flex;
+    gap: 0.8rem;
+
+    &Input {
+      flex-grow: 1;
+      min-width: 0;
+      padding: 1.2rem;
+      border: 0.1rem solid rgba(var(--color-gray));
+      border-radius: var(--radius-10);
+      font-size: 1.6rem;
+      font-weight: 400;
+      line-height: var(--lh-main);
+      color: rgba(var(--color-dark));
+      background-color: rgba(var(--color-white), 0.8);
+      transition: background-color 0.3s;
+
+      &:focus,
+      &:focus-visible {
+        outline: none;
+        background-color: rgba(var(--color-white));
+      }
+
+      &::placeholder {
+        color: rgba(var(--color-gray-dark));
+      }
+
+      @include breakpoint($bp-sm) {
+        padding: 0.8rem;
+        font-size: 1.4rem;
+      }
+    }
+  
+    &Button {
+      flex-shrink: 0;
+      min-width: 16%;
+    }
+  }
+
+  &Error {
+    margin-left: 0.4rem;
+    font-size: 1.4rem;
+    color: rgba(var(--color-red), 0.8);
+
+    @include breakpoint($bp-sm) {
+      font-size: 1.3rem;
+    }
+  }
+}

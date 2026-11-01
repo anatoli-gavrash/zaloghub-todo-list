@@ -1,1 +1,1 @@
-export type SVGIcon = 'check' | 'trash';
+export type SVGIcon = 'check' | 'trash' | 'plus';
