@@ -1,0 +1,51 @@
+import type { TodoTask } from '@components/Todo/Todo';
+
+export const localStoreKey = {
+  TASKS: 'tasks',
+} as const;
+
+export type LocalStoreKey = typeof localStoreKey[keyof typeof localStoreKey];
+
+const isJSON = (string: string): boolean => {
+  try {
+    JSON.parse(string);
+  } catch (error) {
+    return false;
+  }
+
+  return true;
+};
+
+export const getLocalData = (key: LocalStoreKey) => {
+  const result = localStorage.getItem(key);
+
+  return result && isJSON(result) ? JSON.parse(result) : null;
+};
+
+export const setLocalData = <T>(key: LocalStoreKey, data: T) => {
+  localStorage.setItem(key, JSON.stringify(data));
+};
+
+export const deleteLocalData = (key: LocalStoreKey) => {
+  localStorage.removeItem(key);
+};
+
+export const localTasks = {
+  get(): TodoTask[] {
+    const data: TodoTask[] = getLocalData(localStoreKey.TASKS)?.map((task: string) => {
+      const [id, checked, text] = task.split(':');
+
+      return { id, checked, text };
+    }) || [];
+
+    return data;
+  },
+  set(array: TodoTask[]) {
+    const data = array.map(({ id, checked, text }) => `${id}:${checked}:${text}`);
+
+    setLocalData(localStoreKey.TASKS, data);
+  },
+  delete() {
+    deleteLocalData(localStoreKey.TASKS);
+  }
+};
