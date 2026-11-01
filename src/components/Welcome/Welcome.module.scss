@@ -1,0 +1,16 @@
+.welcome {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 4rem;
+
+  &Title {
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  @include breakpoint($bp-sm) {
+    row-gap: 2.4rem;
+  }
+}
