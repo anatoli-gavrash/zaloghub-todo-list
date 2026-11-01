@@ -1,0 +1,57 @@
+.button {
+  --button-text-color: var(--color-white), 0.9;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  gap: 0.8rem;
+  border-radius: var(--radius-10);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: var(--lh-main);
+  color: rgba(var(--button-text-color));
+  transition: background-color 0.3s, opacity 0.5s;
+
+  &Icon {
+    &--first {
+      order: -1;
+    }
+
+    &--last {
+      order: 1;
+    }
+  }
+
+  @include noTouch() {
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &._disabled,
+  &:disabled,
+  &[inert] {
+    opacity: 0.4;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  @include breakpoint($bp-sm) {
+    font-size: 1.4rem;
+  }
+
+  &--default {
+    padding: 1.2rem 2.4rem;
+  }
+
+  &--small {
+    padding: 0.8rem;
+  }
+
+  &--dark {
+    background-color: rgba(var(--color-dark));
+  }
+
+  &--gray {
+    background-color: rgba(var(--color-gray-dark, 0.4));
+  }
+}
