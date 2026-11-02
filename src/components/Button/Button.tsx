@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import styles from './Button.module.scss';
 import InlineSVG from '@components/InlineSvg/InlineSvg';
 
-interface ButtonProps extends ComponentProps<'button'> {
+export interface ButtonProps extends ComponentProps<'button'> {
   color?: 'dark' | 'gray';
   size?: 'default' | 'small';
   text?: string;
@@ -32,7 +32,7 @@ const Button = ({
       )}
       {...props}
     >
-      <span className={clsx(styles.buttonText)}>{text}</span>
+      {text && <span className={clsx(styles.buttonText)}>{text}</span>}
       {icon && <InlineSVG className={clsx(styles.buttonIcon, styles[`buttonIcon--${iconPosition}`])} name={icon} />}
     </button>
   );
