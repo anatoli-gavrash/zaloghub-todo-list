@@ -30,6 +30,12 @@
         color: rgba(var(--color-gray-dark));
       }
 
+      @include noTouch() {
+        &:hover {
+          background-color: rgba(var(--color-white));
+        }
+      }
+
       @include breakpoint($bp-sm) {
         padding: 0.8rem;
         font-size: 1.4rem;
