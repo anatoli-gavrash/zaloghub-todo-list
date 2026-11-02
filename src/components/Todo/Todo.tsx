@@ -1,16 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { ChangeEventHandler } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import clsx from 'clsx';
 import { v4 as uuid } from 'uuid';
 import type { TodoTask } from '@/types/todo';
-import { TODO } from '@constants/text';
-import { localTasks } from '@services/browser/local-store';
+import { TODO, TODO_FILTER, type TodoFilterKey } from '@constants/text';
+import { localFilter, localTasks } from '@services/browser/local-store';
 import Message from '@components/Message/Message';
+import TodoField from './TodoField/TodoField';
+import TodoTabs from './TodoTabs/TodoTabs';
+import TodoButton from './TodoButton/TodoButton';
 import TodoList from './TodoList/TodoList';
 import TodoItem from './TodoItem/TodoItem';
 import styles from './Todo.module.scss';
-import TodoField from './TodoField/TodoField';
 
 interface TodoProps {
   className?: string;
@@ -25,10 +27,28 @@ const TODO_CONFIG = {
 
 const Todo = ({ className }: TodoProps) => {
   const [tasks, setTasks] = useState<TodoTask[]>(localTasks.get());
+  const [filter, setFilter] = useState<TodoFilterKey>(localFilter.get());
   const [inputError, setInputError] = useState<string>();
 
-  const changeHandler = (id: string): ChangeEventHandler<HTMLInputElement> => (e) => {
+  const filteredTasks = useMemo(() => {
+    switch (filter) {
+      case 'all':
+        return tasks;
+      case 'active':
+        return tasks.filter(({checked}) => !checked);
+      case 'completed':
+        return tasks.filter(({checked}) => checked);
+      default:
+        return tasks;
+    }
+  }, [tasks, filter]);
+
+  const changeTaskHandler = (id: string): ChangeEventHandler<HTMLInputElement> => (e) => {
     setTasks((state) => state.map((item) => item.id === id ? { ...item, checked: e.target.checked } : item));
+  };
+
+  const changeFilterHandler = (value: TodoFilterKey): ChangeEventHandler<HTMLInputElement> => () => {
+    setFilter(value);
   };
 
   const actionHandler = (formData: FormData) => {
@@ -53,8 +73,12 @@ const Todo = ({ className }: TodoProps) => {
   };
 
   useEffect(() => {
-    localTasks.set(tasks)
+    localTasks.set(tasks);
   }, [tasks]);
+
+  useEffect(() => {
+    localFilter.set(filter);
+  }, [filter]);
 
   return (
     <AnimatePresence>
@@ -78,16 +102,28 @@ const Todo = ({ className }: TodoProps) => {
             error={inputError}
             button={{ type: 'submit', text: TODO.input.add, icon: 'plus', disabled: false }}
           />
-          {tasks?.length > 0
+          <TodoTabs>
+            <>{[TODO_FILTER.all, TODO_FILTER.active, TODO_FILTER.completed].map(({ title, group, value }) => (
+              <TodoButton
+                text={title}
+                key={value}
+                name={group}
+                value={value}
+                checked={filter === value}
+                onChange={changeFilterHandler(value)}
+              />
+            ))}</>
+          </TodoTabs>
+          {filteredTasks?.length > 0
             ? <TodoList>
-                <>{tasks.map(({ id, checked, text }) => (
+                <>{filteredTasks.map(({ id, checked, text }) => (
                   <TodoItem
                     text={text}
                     key={id}
                     name={id}
                     button={{ type: 'button', size: 'small', icon: 'trash', onClick: deleteHandler(id) }}
                     checked={checked}
-                    onChange={changeHandler(id)}
+                    onChange={changeTaskHandler(id)}
                   />
                 ))}</>
               </TodoList>

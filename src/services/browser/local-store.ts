@@ -1,7 +1,9 @@
 import type { TodoTask } from '@/types/todo';
+import { TODO_FILTER, type TodoFilterKey } from '@constants/text';
 
 export const localStoreKey = {
   TASKS: 'tasks',
+  FILTER: 'filter',
 } as const;
 
 export type LocalStoreKey = typeof localStoreKey[keyof typeof localStoreKey];
@@ -47,5 +49,17 @@ export const localTasks = {
   },
   delete() {
     deleteLocalData(localStoreKey.TASKS);
+  }
+};
+
+export const localFilter = {
+  get(): TodoFilterKey {
+    return getLocalData(localStoreKey.FILTER) || TODO_FILTER.all.value;
+  },
+  set(filter: TodoFilterKey) {
+    setLocalData(localStoreKey.FILTER, filter);
+  },
+  delete() {
+    deleteLocalData(localStoreKey.FILTER);
   }
 };

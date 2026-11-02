@@ -19,3 +19,23 @@ export const TODO = {
     text: 'Добавьте новую задачу'
   }
 } as const;
+
+export const TODO_FILTER = {
+  all: {
+    title: 'Все',
+    group: 'filter',
+    value: 'all'
+  },
+  active: {
+    title: 'Активные',
+    group: 'filter',
+    value: 'active'
+  },
+  completed: {
+    title: 'Завершённые',
+    group: 'filter',
+    value: 'completed'
+  }
+} as const;
+
+export type TodoFilterKey = keyof typeof TODO_FILTER;
