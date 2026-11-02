@@ -66,6 +66,10 @@
     }
   }
 
+  &:has(&LabelInput:checked) {
+    background-color: rgba(var(--color-white), 0.2);
+  }
+
   &:has(&LabelInput:checked) & {
     &LabelInput {
       &::before {
