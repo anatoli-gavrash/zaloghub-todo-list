@@ -1,0 +1,34 @@
+.todo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2.4rem;
+  row-gap: 2.4rem;
+  border-radius: var(--radius-20);
+  background-color: rgba(var(--color-gray-dark), 0.3);
+
+  &Body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2.4rem;
+    
+    &Message {
+      margin: auto;
+      padding: 4rem 0;
+
+      @include breakpoint($bp-sm) {
+        padding: 2rem 0;
+      }
+    }
+
+    @include breakpoint($bp-sm) {
+      row-gap: 1.2rem;
+    }
+  }
+
+  @include breakpoint($bp-sm) {
+    padding: 1.2rem;
+  }
+}

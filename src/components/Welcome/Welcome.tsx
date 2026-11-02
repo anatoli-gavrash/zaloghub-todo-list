@@ -11,6 +11,7 @@ const Welcome = ({ className }: WelcomeProps) => {
   return (
     <section className={clsx(className, styles.welcome, 'width')}>
       <h1 className={clsx(styles.welcomeTitle)}>{WELCOME.title}</h1>
+      <Todo />
     </section>
   );
 };
