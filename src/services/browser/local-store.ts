@@ -1,4 +1,4 @@
-import type { TodoTask } from '@components/Todo/Todo';
+import type { TodoTask } from '@/types/todo';
 
 export const localStoreKey = {
   TASKS: 'tasks',
@@ -35,7 +35,7 @@ export const localTasks = {
     const data: TodoTask[] = getLocalData(localStoreKey.TASKS)?.map((task: string) => {
       const [id, checked, text] = task.split(':');
 
-      return { id, checked, text };
+      return { id, checked: JSON.parse(checked), text };
     }) || [];
 
     return data;
