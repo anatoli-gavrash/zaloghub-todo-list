@@ -11,7 +11,7 @@ export type LocalStoreKey = typeof localStoreKey[keyof typeof localStoreKey];
 const isJSON = (string: string): boolean => {
   try {
     JSON.parse(string);
-  } catch (error) {
+  } catch {
     return false;
   }
 

@@ -14,7 +14,6 @@ export interface ButtonProps extends ComponentProps<'button'> {
 
 const Button = ({
   className,
-  type = 'button',
   color = 'dark',
   size = 'default',
   icon = undefined,
@@ -30,6 +29,7 @@ const Button = ({
         styles[`button--${color}`],
         styles[`button--${size}`]
       )}
+      type={'button'}
       {...props}
     >
       {text && <span className={clsx(styles.buttonText)}>{text}</span>}
