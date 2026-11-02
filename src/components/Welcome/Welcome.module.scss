@@ -4,6 +4,7 @@
   flex-direction: column;
   justify-content: center;
   row-gap: 4rem;
+  margin-top: 8rem;
 
   &Title {
     text-align: center;
@@ -11,6 +12,7 @@
   }
 
   @include breakpoint($bp-sm) {
+    margin-top: 4rem;
     row-gap: 2.4rem;
   }
 }
