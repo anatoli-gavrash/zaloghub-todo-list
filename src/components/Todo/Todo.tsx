@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { ChangeEventHandler } from 'react';
+import type { ChangeEventHandler, MouseEventHandler, SubmitEventHandler } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import clsx from 'clsx';
 import { v4 as uuid } from 'uuid';
@@ -20,10 +20,11 @@ interface TodoProps {
 
 const TODO_CONFIG = {
   input: {
+    name: 'new-task',
     min: 3,
-    max: 300,
+    max: 500,
   }
-};
+} as const;
 
 const Todo = ({ className }: TodoProps) => {
   const [tasks, setTasks] = useState<TodoTask[]>(localTasks.get());
@@ -51,8 +52,12 @@ const Todo = ({ className }: TodoProps) => {
     setFilter(value);
   };
 
-  const actionHandler = (formData: FormData) => {
-    const newTaskText = String(formData.get('new-task') ?? '').replace(/\s+/g, ' ').trim();
+  const submitHandler: SubmitEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const newTaskField = form.elements.namedItem(TODO_CONFIG.input.name) as RadioNodeList || null;
+    const newTaskText = String(newTaskField?.value ?? '').replace(/\s+/g, ' ').trim();
 
     if (!newTaskText) {
       setInputError(TODO.input.error.empty);
@@ -63,12 +68,13 @@ const Todo = ({ className }: TodoProps) => {
     } else if (tasks.some(({ text }) => text.toLocaleLowerCase() === newTaskText.toLocaleLowerCase())) {
       setInputError(TODO.input.error.has);
     } else {
+      newTaskField.value = '';
       setInputError(undefined);
       setTasks((state) => [ { id: uuid(), checked: false, text: newTaskText }, ...state ]);
     }
   };
 
-  const deleteHandler = (id: string): React.MouseEventHandler<HTMLButtonElement> => () => {
+  const deleteHandler = (id: string): MouseEventHandler<HTMLButtonElement> => () => {
     setTasks((state) => state.filter((item) => item.id !== id));
   };
 
@@ -84,7 +90,7 @@ const Todo = ({ className }: TodoProps) => {
     <AnimatePresence>
       <motion.form
         className={clsx(className, styles.todo)}
-        action={actionHandler}
+        onSubmit={submitHandler}
         key={'list'}
         layout
         transition={{
@@ -97,7 +103,7 @@ const Todo = ({ className }: TodoProps) => {
       >
         <div className={clsx(styles.todoBody)}>
           <TodoField
-            name={'new-task'}
+            name={TODO_CONFIG.input.name}
             placeholder={TODO.input.placeholder}
             error={inputError}
             button={{ type: 'submit', text: TODO.input.add, icon: 'plus', disabled: false }}
