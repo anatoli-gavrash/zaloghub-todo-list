@@ -1,0 +1,46 @@
+.todoButton {
+  flex-grow: 1;
+  position: relative;
+  display: block;
+  max-width: calc(100% / 3);
+  padding: 0.8rem;
+  border-radius: var(--radius-8);
+  background-color: rgba(var(--color-dark));
+  opacity: 0.5;
+  transition: opacity 0.5s;
+  cursor: pointer;
+
+  &Input {
+    appearance: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &Text {
+    display: flex;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: var(--lh-main);
+    color: rgba(var(--color-white), 0.9);
+
+    @include breakpoint($bp-sm) {
+      font-size: 1.4rem;
+    }
+  }
+
+  @include noTouch() {
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &:has(Input:checked) {
+    opacity: 1;
+  }
+
+  @include breakpoint($bp-sm) {
+    max-width: initial;
+  }
+}
